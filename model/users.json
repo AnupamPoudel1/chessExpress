@@ -1,1 +1,9 @@
-[{"username":"newUser","roles":{"User":704},"password":"$2b$10$teQLMWsCAyHU6q31OUAXLeUlunEt.x9uEJA6hhaI.J5dKJfDnM3BC","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld1VzZXIiLCJpYXQiOjE3MDQzMzA5MTYsImV4cCI6MTcwNDQxNzMxNn0.nn9GTXgRmg7zPemPVT_L2aqhcaFHAMYtHHEeMJ6RBYM"}]
+[
+  {
+    "username": "anupam",
+    "email": "anupampoudel78@gmail.com",
+    "roles": { "User": 704 },
+    "password": "$2b$10$IZIUMu/UYT63JfCXa.UqI.wS131qfFpMkwKPKKFEtb3kHn4jReMyy",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFudXBhbSIsImlhdCI6MTcwODcxMjcyMSwiZXhwIjoxNzA4Nzk5MTIxfQ.FihQ3VahuMIse58S7QzcgTzOr6Lk3HADmo3sI0_AdL0"
+  }
+]

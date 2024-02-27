@@ -1,21 +1,17 @@
-const userDB = {
-    users: require('../model/users.json'),
-    setUsers: function (data) { this.users = data }
-}
+const User = require('../model/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
-const fsPromises = require('fs').promises;
-const path = require('path');
 
 const handleLogin = async (req, res) => {
-    const { user, psw } = req.body;
-    if (!user || !psw) return res.status(400).json({ 'message': 'username and password required' });
+    const { userMail, password } = req.body;
+    if (!userMail || !password) return res.status(400).json({ 'message': 'username and password required' });
+
     // check for user in database
-    const foundUser = userDB.users.find(person => person.username === user);
-    if (!foundUser) return res.sendStatus(401); //Unauthorized
+    const foundUser = await User.findOne({username: userMail, email: userMail});
+    if (!foundUser) return res.status(401).json({ 'failure': 'user not found' }); //Unauthorized
+    
     // evaluate password if user found
-    const match = await bcrypt.compare(psw, foundUser.password);
+    const match = await bcrypt.compare(password, foundUser.password);
     if (match) {
         const roles = Object.values(foundUser.roles);
         //create JWT token if user login us succesful
@@ -35,17 +31,14 @@ const handleLogin = async (req, res) => {
             { expiresIn: '1d' }
         );
         // saving access and refresh token in the database
-        const otherUser = userDB.users.filter(person => person.username !== foundUser.username);
-        const currentUser = { ...foundUser, refreshToken };
-        userDB.setUsers([...otherUser, currentUser]);
-        await fsPromises.writeFile(
-            path.join(__dirname, '..', 'model', 'users.json'),
-            JSON.stringify(userDB.users)
-        );
+        foundUser.refreshToken = refreshToken;
+        const result = foundUser.save();
+        console.log(result);
+
         res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
         res.json({ accessToken });
     } else {
-        res.sendStatus(401); //Unauthorized
+        res.status(401).json({ 'error': 'password not matched' }); //Unauthorized
     }
 }
 
