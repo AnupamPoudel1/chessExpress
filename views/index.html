@@ -4,24 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Index</title>
-    <link rel="stylesheet" href="/css/output.css">
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        .index{
-            height: 100vh;
-            color: white;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/output.css" />
   </head>
   <body>
-    <div class="index">This is index html located in the views folder.</div>
+    <div
+      class="bgimg w-full min-h-screen max-h-fit bg-black text-white flex justify-center items-center overflow-hidden"
+    >
+      <div
+        class="relative w-full max-w-screen-2xl min-h-screen flex flex-col justify-center items-center"
+      >
+        <div class="flex flex-col justify-center items-center">
+          <h1
+            class="logo flex justify-center items-center font-bold text-6xl mb-4"
+          >
+            Chessmate
+          </h1>
+          <h1 class="font-bold text-xl">The Ultimate Chessbot</h1>
+        </div>
+        <a href="/login">
+          <button
+            class="bg-white text-black h-max w-max px-10 py-5 mt-10 rounded-md hover:text-white hover:bg-black"
+          >
+            Play Game
+          </button>
+        </a>
+      </div>
+    </div>
   </body>
 </html>

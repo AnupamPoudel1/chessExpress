@@ -8,13 +8,13 @@
   </head>
   <body>
     <div
-      class="w-full min-h-screen max-h-fit bg-black text-white flex justify-center items-center overflow-hidden"
+      class="bgimg w-full min-h-screen max-h-fit bg-black text-white flex justify-center items-center overflow-hidden"
     >
       <div
         class="relative w-full max-w-screen-2xl min-h-screen flex flex-col justify-center items-center"
       >
         <div
-          class="absolute top-[50%] right-[50%] translate-x-[50%] -translate-y-[50%] opacity-100 transition-all duration-500 border border-white rounded-md p-4"
+          class="absolute top-[50%] right-[50%] translate-x-[50%] -translate-y-[50%] opacity-100 transition-all duration-500 border border-white bg-black rounded-md p-4"
         >
           <div class="flex flex-col justify-center items-center">
             <div
@@ -64,12 +64,15 @@
             </form>
           </div>
           <div
-            class="w-full mt-5 text-base text-white flex justify-center items-center"
+            class="mt-5 text-base text-white flex flex-col justify-center items-center"
           >
-            <p>
-              New?
-              <a href="/register" class="border-b-2 border-white">Sign up</a>
-            </p>
+            <div class="flex justify-center items-center">
+              New here? <a href="/register" class="ml-2 border-b-2 border-white">Sign up</a>
+            </div>
+            <div class="mt-5 flex flex-row justify-center items-center">
+              <p>OR</p>
+              <a href="/register" class="ml-2 border-b-2 border-white">Play as a guest</a>
+            </div>
           </div>
         </div>
       </div>
