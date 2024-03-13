@@ -8,13 +8,21 @@
   </head>
   <body>
     <div
-      class="w-full min-h-screen max-h-fit bg-black text-white flex justify-center items-center overflow-hidden"
+      class="bgimg w-full min-h-screen max-h-fit bg-black text-white flex justify-center items-center overflow-hidden"
     >
       <div
         class="relative w-full max-w-screen-2xl min-h-screen flex flex-col justify-center items-center"
       >
         <div
-          class="absolute top-[50%] right-[50%] translate-x-[50%] -translate-y-[50%] opacity-100 transition-all duration-500 border border-white rounded-md p-4"
+          id="main-error"
+          class="absolute top-5 right-5 h-max w-max bg-red rounded-md"
+        ></div>
+        <div
+          id="main-success"
+          class="absolute top-5 right-5 h-max w-max bg-green rounded-md"
+        ></div>
+        <div
+          class="absolute top-[50%] right-[50%] translate-x-[50%] -translate-y-[50%] opacity-100 transition-all duration-500 border border-white rounded-md p-4 bg-black"
         >
           <div class="flex flex-col justify-center items-center">
             <div
@@ -22,12 +30,11 @@
             >
               CM
             </div>
-            <h1 class="font-bold text-2xl">Sign up and start playing</h1>
+            <h1 class="font-bold text-2xl">Sign up</h1>
           </div>
           <div class="flex max-md:flex-col justify-center items-center mt-8">
             <form
-              action="/register"
-              method="POST"
+              id="register-form"
               class="flex flex-col justify-center items-center"
             >
               <div class="flex flex-col justify-center items-start m-3">
@@ -85,19 +92,85 @@
     </div>
 
     <script>
-      const form = document.getElementById('register-form');
-      
-      form.addEventListener('submit', (e) => {
+      const form = document.getElementById("register-form");
+      const error = document.getElementById("main-error");
+      const success = document.getElementById("main-success");
+
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const username = form.username.value;
         const email = form.email.value;
         const password = form.password.value;
 
-        console.log(username, email, password);
-      })
-
+        if (username.length == 0 || username.length <= 2) {
+          error.textContent =
+            "Username must equal to or more than 3 words in length";
+          error.classList.add("p-2");
+          setTimeout((e) => {
+            error.textContent = "";
+            error.classList.remove("p-2");
+          }, 3000);
+        } else if (
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(!email)
+        ) {
+          error.textContent = "Invalid Email";
+          error.classList.add("p-2");
+          setTimeout((e) => {
+            error.textContent = "";
+            error.classList.remove("p-2");
+          }, 3000);
+        } else if (
+          /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/.test(
+            !password
+          )
+        ) {
+          error.textContent =
+            "Password must contain a numeric digit, an special character and must be between (7 - 14) letters in length";
+          error.classList.add("p-2");
+          setTimeout((e) => {
+            error.textContent = "";
+            error.classList.remove("p-2");
+          }, 3000);
+        } else {
+          try {
+            const res = await fetch("/register", {
+              method: "POST",
+              body: JSON.stringify({ username, email, password }),
+              headers: { "Content-Type": "application/json" },
+            });
+            const data = await res.json();
+            console.log(data);
+            if (data.error) {
+              error.textContent = data.error;
+              error.classList.add("p-2");
+              setTimeout((e) => {
+                error.textContent = "";
+                error.classList.remove("p-2");
+              }, 3000);
+            }
+            if (data.success) {
+              success.textContent = data.success;
+              success.classList.add("p-2");
+              setTimeout((e) => {
+                success.textContent = "";
+                success.classList.remove("p-2");
+              }, 3000);
+              document.getElementById("username").value = "";
+              document.getElementById("email").value = "";
+              document.getElementById("password").value = "";
+              location.assign("/login");
+            }
+          } catch (err) {
+            error.textContent = "No server response";
+            error.classList.add("p-2");
+            setTimeout((e) => {
+              error.textContent = "";
+              error.classList.remove("p-2");
+            }, 3000);
+          }
+        }
+      });
     </script>
-
   </body>
 </html>

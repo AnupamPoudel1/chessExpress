@@ -38,8 +38,7 @@ app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
-app.use(verifyJWT);
-// app.use('/game', require('./routes/game'));
+app.get('/game', verifyJWT, require('./routes/game'));
 
 app.all('*', (req, res) => {
     res.status(404);

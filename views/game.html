@@ -61,7 +61,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- Custom JS -->
+    <!-- Chessbot JS -->
     <script defer src="/js/main.js"></script>
   </head>
   <body>
@@ -84,86 +84,88 @@
               That's &nbsp <span id="positions-per-s">0</span> &nbsp positions /
               s.
             </div>
+            <div class="row my-3 text-align-center">
+              <div class="col-md-12">
+                <h2>Advantage</h2>
+                <p>
+                  <span id="advantageColor">Neither side</span> has the
+                  advantage (+<span id="advantageNumber">0</span>).
+                </p>
+                <div class="progress">
+                  <div
+                    class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    aria-valuenow="0"
+                    style="width: 50%"
+                    aria-valuemin="-2000"
+                    aria-valuemax="4000"
+                    id="advantageBar"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="row my-3 text-align-center">
+              <div class="col-md-12">
+                <h2>Status</h2>
+                <p><span id="status">No check, checkmate, or draw.</span></p>
+              </div>
+            </div>
             <div id="accordion">
               <div class="card">
                 <div class="card-header" id="settingsHeading">
-                  <h2 class="text-align-center">
-                    <button
-                      class="btn btn-header no-outline"
-                      data-toggle="collapse"
-                      data-target="#settings"
-                      aria-expanded="true"
-                      aria-controls="settings"
-                    >
-                      Settings
-                    </button>
+                  <h2 class="text-align-center text-black font-bold text-xl">
+                    Settings
                   </h2>
                 </div>
               </div>
-              <div
-                id="settings"
-                class="collapse"
-                aria-labelledby="settingsHeading"
-                data-parent="#accordion"
-              >
-                <div class="card-body">
-                  <div class="row align-items-center justify-content-center">
-                    <div class="form-group">
-                      <label for="search-depth">Search Depth (Black):</label>
-                      <select id="search-depth">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3" selected>3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
-                    </div>
+              <div class="card-body">
+                <div class="row align-items-center justify-content-center">
+                  <div class="form-group">
+                    <label for="search-depth">Search Depth (Black):</label>
+                    <select id="search-depth" class="text-black">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
                   </div>
-                  <div class="row align-items-center justify-content-center">
-                    <div class="form-group">
-                      <label for="search-depth-white"
-                        >Search Depth (White):</label
-                      >
-                      <select id="search-depth-white">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3" selected>3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
-                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                  <div class="form-group">
+                    <label for="search-depth-white"
+                      >Search Depth (White):</label
+                    >
+                    <select id="search-depth-white" class="text-black">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
                   </div>
-                  <div class="row align-items-center justify-content-center">
-                    <div class="form-group">
-                      <input
-                        type="checkbox"
-                        id="showHint"
-                        name="showHint"
-                        value="showHint"
-                      />
-                      <label for="showHint">Show Suggested Move (White)</label>
-                    </div>
+                </div>
+                <div class="row align-items-center justify-content-center">
+                  <div class="form-group">
+                    <input
+                      type="checkbox"
+                      id="showHint"
+                      name="showHint"
+                      value="showHint"
+                    />
+                    <label for="showHint">Show Suggested Move (White)</label>
                   </div>
                 </div>
               </div>
               <div class="card">
                 <div class="card-header" id="openingPositionsHeading">
-                  <h2 class="text-align-center">
-                    <button
-                      class="btn btn-header no-outline"
-                      data-toggle="collapse"
-                      data-target="#openingPositions"
-                      aria-expanded="true"
-                      aria-controls="openingPositions"
-                    >
-                      Opening Positions
-                    </button>
+                  <h2 class="text-align-center text-black font-bold text-xl">
+                    Opening Positions
                   </h2>
                 </div>
               </div>
               <div
                 id="openingPositions"
-                class="collapse"
                 aria-labelledby="openingPositionsHeading"
                 data-parent="#accordion"
               >
@@ -196,23 +198,12 @@
               </div>
               <div class="card">
                 <div class="card-header" id="compVsCompHeading">
-                  <h2 class="text-align-center">
-                    <button
-                      class="btn btn-header no-outline"
-                      data-toggle="collapse"
-                      data-target="#compVsComp"
-                      aria-expanded="true"
-                      aria-controls="compVsComp"
-                    >
-                      Computer vs. Computer
-                    </button>
-                  </h2>
+                  <h2 class="text-align-center text-black font-bold text-xl">Computer vs. Computer</h2>
                 </div>
               </div>
             </div>
             <div
               id="compVsComp"
-              class="collapse"
               aria-labelledby="compVsCompHeading"
               data-parent="#accordion"
             >
@@ -229,32 +220,6 @@
                     </button>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row my-3 text-align-center">
-              <div class="col-md-12">
-                <h2>Advantage</h2>
-                <p>
-                  <span id="advantageColor">Neither side</span> has the
-                  advantage (+<span id="advantageNumber">0</span>).
-                </p>
-                <div class="progress">
-                  <div
-                    class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
-                    role="progressbar"
-                    aria-valuenow="0"
-                    style="width: 50%"
-                    aria-valuemin="-2000"
-                    aria-valuemax="4000"
-                    id="advantageBar"
-                  ></div>
-                </div>
-              </div>
-            </div>
-            <div class="row my-3 text-align-center">
-              <div class="col-md-12">
-                <h2>Status</h2>
-                <p><span id="status">No check, checkmate, or draw.</span></p>
               </div>
             </div>
           </div>

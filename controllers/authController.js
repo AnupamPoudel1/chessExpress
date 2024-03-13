@@ -3,13 +3,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
-    const { userMail, password } = req.body;
-    if (!userMail || !password) return res.status(400).json({ 'message': 'username and password required' });
+    const { username, password } = req.body;
+    if (!username || !password) return res.status(400).json({ 'error': 'Username and password required' });
 
     // check for user in database
-    const foundUser = await User.findOne({username: userMail, email: userMail});
-    if (!foundUser) return res.status(401).json({ 'failure': 'user not found' }); //Unauthorized
-    
+    const foundUser = await User.findOne({ username });
+    if (!foundUser) return res.status(401).json({ 'error': 'User not found' }); //Unauthorized
+
     // evaluate password if user found
     const match = await bcrypt.compare(password, foundUser.password);
     if (match) {
@@ -17,13 +17,13 @@ const handleLogin = async (req, res) => {
         //create JWT token if user login us succesful
         const accessToken = jwt.sign(
             {
-                "UserInfo": { 
+                "UserInfo": {
                     "username": foundUser.username,
                     "roles": roles
                 },
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '30s' }
+            { expiresIn: '30m' }
         );
         const refreshToken = jwt.sign(
             { "username": foundUser.username },
@@ -38,7 +38,7 @@ const handleLogin = async (req, res) => {
         res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
         res.json({ accessToken });
     } else {
-        res.status(401).json({ 'error': 'password not matched' }); //Unauthorized
+        res.status(401).json({ 'error': 'Username and password does not match' }); //Unauthorized
     }
 }
 
