@@ -165,10 +165,6 @@ function evaluateBoard(game, move, prevSum, color) {
     if (move.piece === 'k') {
       move.piece = 'k_e';
     }
-    // Kings can never be captured
-    // else if (move.captured === 'k') {
-    //   move.captured = 'k_e';
-    // }
   }
 
   if ('captured' in move) {
@@ -187,7 +183,7 @@ function evaluateBoard(game, move, prevSum, color) {
   }
 
   if (move.flags.includes('p')) {
-    // NOTE: promote to queen for simplicity
+    // promote to queen for simplicity
     move.promotion = 'q';
 
     // Our piece was promoted (good for us)
