@@ -140,7 +140,6 @@
               headers: { "Content-Type": "application/json" },
             });
             const data = await res.json();
-            console.log(data);
             if (data.error) {
               error.textContent = data.error;
               error.classList.add("p-2");

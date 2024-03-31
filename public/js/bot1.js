@@ -25,11 +25,6 @@ board = Chessboard('myBoard', config);
 
 timer = null;
 
-/*
- * Piece Square Tables, adapted from Sunfish.py:
- * https://github.com/thomasahle/sunfish/blob/master/sunfish.py
- */
-
 var weights = { p: 100, n: 280, b: 320, r: 479, q: 929, k: 60000, k_e: 60000 };
 var pst_w = {
   p: [
@@ -118,10 +113,7 @@ var pst_b = {
 var pstOpponent = { w: pst_b, b: pst_w };
 var pstSelf = { w: pst_w, b: pst_b };
 
-/*
- * Evaluates the board at this point in time,
- * using the material weights and piece square tables.
- */
+// board evaluation
 function evaluateBoard(game, move, prevSum, color) {
 
   if (game.in_checkmate()) {
@@ -226,19 +218,16 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
   });
 
   var currMove;
-  // Maximum depth exceeded or node is a terminal node (no children)
   if (depth === 0 || children.length === 0) {
     return [null, sum];
   }
 
-  // Find maximum/minimum from list of 'children' (possible moves)
   var maxValue = Number.NEGATIVE_INFINITY;
   var minValue = Number.POSITIVE_INFINITY;
   var bestMove;
   for (var i = 0; i < children.length; i++) {
     currMove = children[i];
 
-    // Note: in our case, the 'children' are simply modified game states
     var currPrettyMove = game.ugly_move(currMove);
     var newSum = evaluateBoard(game, currPrettyMove, sum, color);
     var [childBestMove, childValue] = minimax(
@@ -323,7 +312,7 @@ function updateAdvantage() {
 }
 
 /*
- * Calculates the best legal move for the given color.
+  Calculates the best legal move for the given color.
  */
 function getBestMove(game, color, currSum) {
   positionCount = 0;
@@ -436,7 +425,7 @@ function reset() {
 }
 
 /*
- * Event listeners for various buttons.
+ * opening position
  */
 $('#ruyLopezBtn').on('click', function () {
   reset();
@@ -544,10 +533,6 @@ function showHint() {
   }
 }
 
-/*
- * The remaining code is adapted from chessboard.js examples #5000 through #5005:
- * https://chessboardjs.com/examples#5000
- */
 function removeGreySquares() {
   $('#myBoard .square-55d63').css('background', '');
 }

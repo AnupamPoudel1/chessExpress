@@ -15,13 +15,12 @@ const userSchema = new Schema({
             type: Number,
             default: 704
         },
-        Admin: Number
     },
     password: {
         type: String,
         required: true
     },
-    accessToken: String
+    refreshToken: String
 });
 
 module.exports = mongoose.model('User', userSchema);

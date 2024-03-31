@@ -97,8 +97,6 @@
             withCredentials: true,
           });
           const data = await response.json();
-          console.log(data);
-          console.log(username, password);
           if (data.error) {
             error.textContent = data.error;
             error.classList.add("p-2");

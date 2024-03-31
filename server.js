@@ -16,8 +16,6 @@ connectDB();
 
 // cross origin resource sharing
 app.use(credentials);
-
-// cross origin resource sharing
 app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: false }));
@@ -39,6 +37,7 @@ app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
 app.get('/game', verifyJWT, require('./routes/game'));
+app.get('/game2', verifyJWT, require('./routes/game'));
 
 app.all('*', (req, res) => {
     res.status(404);
