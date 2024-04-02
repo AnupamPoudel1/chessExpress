@@ -7,28 +7,85 @@
     <link rel="stylesheet" href="/css/output.css" />
   </head>
   <body>
-    <div
-      class="bgimg w-full min-h-screen max-h-fit bg-black text-white flex justify-center items-center overflow-hidden"
-    >
-      <div
-        class="relative w-full max-w-screen-2xl min-h-screen flex flex-col justify-center items-center"
+    <div>
+      <section
+        class="w-full h-full flex flex-col items-center overflow-x-hidden bg-creamwhite"
       >
-        <div class="flex flex-col justify-center items-center">
-          <h1
-            class="logo flex justify-center items-center font-bold text-6xl mb-4"
+        <div class="relative w-full h-full flex justify-center items-center">
+          <aside
+            id="default-sidebar"
+            class="absolute top-0 left-0 z-40 w-max h-screen bg-black transition-transform"
+            aria-label="Sidebar"
           >
-            Chessmate
-          </h1>
-          <h1 class="font-bold text-xl">The Ultimate Chessbot</h1>
+            <div
+              class="h-full px-3 py-4 overflow-y-auto bg-darkBlack shadow-md"
+            >
+              <div class="h-10 w-40 mb-10">
+                <img
+                  src="/img/logo-no-background.png"
+                  alt="logo"
+                  class="h-full w-full bg-contain rounded-xl"
+                />
+              </div>
+              <ul class="space-y-2 font-medium">
+                <li>
+                  <a
+                    href="/game"
+                    class="flex justify-center items-center p-2 text-white rounded-lg hover:bg-black"
+                  >
+                    <span>Play</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/register"
+                    class="flex justify-center items-center p-2 text-black rounded-lg bg-white hover:bg-black hover:text-green mt-10"
+                  >
+                    <span>Register</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/login"
+                    class="flex justify-center items-center p-2 text-white rounded-lg bg-green hover:bg-black hover:text-green"
+                  >
+                    <span>Login</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+          <div
+            class="w-full bg-black min-h-screen flex justify-center items-center p-3"
+          >
+            <div class="h-[400px] w-[400px] mb-10">
+              <img
+                src="/img/chess.png"
+                alt="board"
+                class="h-full w-full bg-cover rounded-xl"
+              />
+            </div>
+            <div
+              class="h-max w-max flex flex-col justify-center items-center mb-10 ml-10"
+            >
+              <div class="text-5xl font-bold text-white text center">
+                Play chess with the <br />
+                Ultimate Chess bot
+              </div>
+              <div class="mt-10 flex flex-col justify-center items-center">
+                <button class="px-12 py-4 bg-green rounded-md text-white">
+                  <a href="/home" class="font-bold text-xl">Play Computer</a>
+                  <p class="text-xs mt-2">Play vs a customizable bot</p>
+                </button>
+                <!-- <button class="px-10 py-4 bg-white rounded-md text-green mt-10">
+                  <a href="/compgame" class="font-bold text-xl">Watch Computer</a>
+                  <p class="text-xs mt-2">Computer vs Computer</p>
+                </button> -->
+              </div>
+            </div>
+          </div>
         </div>
-        <a href="/login">
-          <button
-            class="bg-white text-black h-max w-max px-10 py-5 mt-10 rounded-md hover:text-white hover:bg-black"
-          >
-            Play Game
-          </button>
-        </a>
-      </div>
+      </section>
     </div>
   </body>
 </html>

@@ -208,69 +208,95 @@ function evaluateBoard(game, move, prevSum, color) {
   return prevSum;
 }
 
+// minimax algorithm
+var lastFiveMove = [];
+
+function updateLastMovesHTML() {
+    var lastMovesList = document.getElementById("lastMovesList");
+    lastMovesList.innerHTML = ""; // Clear previous content
+
+    // Iterate over the last 5 moves and add them to the list
+    lastFiveMove.forEach(function (moveData, index) {
+        var listItem = document.createElement("li");
+        listItem.textContent = (index + 1) + ": " + moveData.bestMove.san + " - Evaluation Value: " + moveData.evaluationValue;
+        lastMovesList.appendChild(listItem);
+    });
+}
+
 function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
-  positionCount++;
-  var children = game.ugly_moves({ verbose: true });
+    positionCount++;
+    var children = game.ugly_moves({ verbose: true });
 
-  // Sort moves randomly, so the same move isn't always picked on ties
-  children.sort(function (a, b) {
-    return 0.5 - Math.random();
-  });
+    // Sort moves randomly, so the same move isn't always picked on ties
+    children.sort(function (a, b) {
+        return 0.5 - Math.random();
+    });
 
-  var currMove;
-  if (depth === 0 || children.length === 0) {
-    return [null, sum];
-  }
+    var currMove;
+    if (depth === 0 || children.length === 0) {
+        return [null, sum];
+    }
 
-  var maxValue = Number.NEGATIVE_INFINITY;
-  var minValue = Number.POSITIVE_INFINITY;
-  var bestMove;
-  for (var i = 0; i < children.length; i++) {
-    currMove = children[i];
+    var maxValue = Number.NEGATIVE_INFINITY;
+    var minValue = Number.POSITIVE_INFINITY;
+    var bestMove;
+    for (var i = 0; i < children.length; i++) {
+        currMove = children[i];
 
-    var currPrettyMove = game.ugly_move(currMove);
-    var newSum = evaluateBoard(game, currPrettyMove, sum, color);
-    var [childBestMove, childValue] = minimax(
-      game,
-      depth - 1,
-      alpha,
-      beta,
-      !isMaximizingPlayer,
-      newSum,
-      color
-    );
+        var currPrettyMove = game.ugly_move(currMove);
+        var newSum = evaluateBoard(game, currPrettyMove, sum, color);
+        var [childBestMove, childValue] = minimax(
+            game,
+            depth - 1,
+            alpha,
+            beta,
+            !isMaximizingPlayer,
+            newSum,
+            color
+        );
 
-    game.undo();
+        game.undo();
+
+        if (isMaximizingPlayer) {
+            if (childValue > maxValue) {
+                maxValue = childValue;
+                bestMove = currPrettyMove;
+            }
+            if (childValue > alpha) {
+                alpha = childValue;
+            }
+        } else {
+            if (childValue < minValue) {
+                minValue = childValue;
+                bestMove = currPrettyMove;
+            }
+            if (childValue < beta) {
+                beta = childValue;
+            }
+        }
+
+        // Alpha-beta pruning
+        if (alpha >= beta) {
+            break;
+        }
+    }
+
 
     if (isMaximizingPlayer) {
-      if (childValue > maxValue) {
-        maxValue = childValue;
-        bestMove = currPrettyMove;
-      }
-      if (childValue > alpha) {
-        alpha = childValue;
-      }
+        lastFiveMove.push({ bestMove: bestMove, evaluationValue: maxValue });
+
+        // If the array has more than 5 moves, remove the oldest move
+        if (lastFiveMove.length > 10) {
+            lastFiveMove.shift();
+        }
+
+        // upadting html moves
+        updateLastMovesHTML();
+
+        return [bestMove, maxValue];
     } else {
-      if (childValue < minValue) {
-        minValue = childValue;
-        bestMove = currPrettyMove;
-      }
-      if (childValue < beta) {
-        beta = childValue;
-      }
+        return [bestMove, minValue];
     }
-
-    // Alpha-beta pruning
-    if (alpha >= beta) {
-      break;
-    }
-  }
-
-  if (isMaximizingPlayer) {
-    return [bestMove, maxValue];
-  } else {
-    return [bestMove, minValue];
-  }
 }
 
 function checkStatus(color) {

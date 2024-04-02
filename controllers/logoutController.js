@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const handleLogut = async (req, res) => {
     const cookies = req.cookies;
-    if (!cookies?.jwt) return res.sendStatus(204) //no content ie no cookie found to clear
+    if (!cookies?.jwt) return res.sendStatus(204); //no content ie no cookie found to clear
     const refreshToken = cookies.jwt;
 
     // check for refreshToken in database

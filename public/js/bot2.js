@@ -208,7 +208,21 @@ function evaluateBoard(game, move, prevSum, color) {
     return prevSum;
 }
 
-var lastFiveBestMove = [];
+// minimax algorithm
+var lastFiveMove = [];
+
+function updateLastMovesHTML() {
+    var lastMovesList = document.getElementById("lastMovesList");
+    lastMovesList.innerHTML = ""; // Clear previous content
+
+    // Iterate over the last 5 moves and add them to the list
+    lastFiveMove.forEach(function (moveData, index) {
+        var listItem = document.createElement("li");
+        listItem.textContent = (index + 1) + ": " + moveData.bestMove.san + " - Evaluation Value: " + moveData.evaluationValue;
+        lastMovesList.appendChild(listItem);
+    });
+}
+
 function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
     positionCount++;
     var children = game.ugly_moves({ verbose: true });
@@ -269,18 +283,16 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
 
 
     if (isMaximizingPlayer) {
-        lastFiveBestMove.push({bestMove: bestMove, evaluationValue: maxValue});
+        lastFiveMove.push({ bestMove: bestMove, evaluationValue: maxValue });
 
         // If the array has more than 5 moves, remove the oldest move
-        if (lastFiveBestMove.length > 5) {
-            lastFiveBestMove.shift();
+        if (lastFiveMove.length > 10) {
+            lastFiveMove.shift();
         }
 
-        // Print the last 5 moves to the console
-        console.log("Last 5 Best Moves:");
-        lastFiveBestMove.forEach(function (moveData, index) {
-            console.log(index + 1 + ": " + moveData.bestMove.san, moveData.evaluationValue);
-        });
+        // upadting html moves
+        updateLastMovesHTML();
+
         return [bestMove, maxValue];
     } else {
         return [bestMove, minValue];

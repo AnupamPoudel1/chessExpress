@@ -65,47 +65,163 @@
     <script defer src="/js/bot2.js"></script>
   </head>
   <body>
-    <nav class="bg-black text-white flex justify-between items-center p-3">
-      <div class="logo text-3xl te">Chessmate</div>
-      <div class="button">
-        <form id="logout-form">
-          <input
-            type="submit"
-            value="Logout"
-            class="p-2 flex justify-center items-center bg-white text-black rounded-md"
-          />
-        </form>
-      </div>
-    </nav>
-    <main>
-      <div
-        class="w-full min-h-screen max-h-fit bg-black text-white flex justify-center items-center overflow-hidden"
+    <div>
+      <section
+        class="w-full h-full flex flex-col items-center overflow-x-hidden bg-creamwhite"
       >
-        <div
-          class="relative w-full max-w-7xl min-h-screen flex justify-center items-center"
-        >
-          <div class="col-md-6">
-            <h1 class="text-align-center">
-              Chessmate - The ultimate chess bot
-            </h1>
-            <div class="row justify-content-center">
-              <span id="position-count">0</span> &nbsp positions evaluated in
-              &nbsp <span id="time">0</span>s.
+        <div class="relative w-full h-full flex justify-center items-center">
+          <aside
+            id="default-sidebar"
+            class="absolute top-0 left-0 z-40 w-max h-screen bg-black transition-transform"
+            aria-label="Sidebar"
+          >
+            <div
+              class="h-full px-3 py-4 overflow-y-auto bg-darkBlack shadow-md"
+            >
+              <div class="h-10 w-40 mb-10">
+                <img
+                  src="/img/logo-no-background.png"
+                  alt="logo"
+                  class="h-full w-full bg-contain rounded-xl"
+                />
+              </div>
+              <ul class="space-y-2 font-medium">
+                <li>
+                  <div class="flex flex-col justify-center items-center">
+                    <div class="text-xl font-bold text-white mb-2">
+                      Settings
+                    </div>
+                    <div class="flex justify-center items-center text-green">
+                      <div class="form-group">
+                        <label for="search-depth">Search Depth (Black):</label>
+                        <select id="search-depth" class="text-black">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3" selected>3</option>
+                          <option value="4">4</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="flex justify-center items-center text-green">
+                      <div class="form-group">
+                        <label for="search-depth-white"
+                          >Search Depth (White):</label
+                        >
+                        <select id="search-depth-white" class="text-black">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3" selected>3</option>
+                          <option value="4">4</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-center text-green">
+                      <div class="form-group">
+                        <input
+                          type="checkbox"
+                          id="showHint"
+                          name="showHint"
+                          value="showHint"
+                        />
+                        <label for="showHint"
+                          >Show Suggested Move (White)</label
+                        >
+                      </div>
+                    </div>
+                    <div class="text-xl font-bold text-white mb-2">
+                      Openings
+                    </div>
+                    <div class="flex flex-col justify-center items-center">
+                      <button
+                        class="bg-green text-white px-3 py-2 rounded-md m-1"
+                        id="italianGameBtn"
+                      >
+                        Italian Game
+                      </button>
+                      <button
+                        class="bg-green text-white px-3 py-2 rounded-md m-1"
+                        id="sicilianDefenseBtn"
+                      >
+                        Sicilian Defense
+                      </button>
+                      <button
+                        class="bg-green text-white px-3 py-2 rounded-md m-1"
+                        id="ruyLopezBtn"
+                      >
+                        Ruy Lopez
+                      </button>
+                      <button
+                        class="bg-green text-white px-3 py-2 rounded-md m-1"
+                        id="startBtn"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <form id="logout-form flex justify-center items-center">
+                    <input
+                      type="submit"
+                      value="Logout"
+                      class="flex justify-center items-center p-2 text-black rounded-lg bg-white hover:bg-black hover:text-green mt-10 cursor-pointer"
+                    />
+                  </form>
+                </li>
+              </ul>
             </div>
-            <div class="row mb-3 justify-content-center">
-              That's &nbsp <span id="positions-per-s">0</span> &nbsp positions /
-              s.
+          </aside>
+          <div
+            class="w-full bg-black min-h-screen flex flex-col justify-center items-center p-3"
+          >
+            <div class="w-[600px]">
+              <div id="myBoard" class="w-full overflow-hidden"></div>
+              <div
+                class="flex justify-between items-center w-full mt-1 p-1 px-5"
+              >
+                <button
+                  id="undoBtn"
+                  class="bg-white text-black font-bold cursor-pointer px-3 py-2 rounded-md"
+                >
+                  Undo
+                </button>
+                <button
+                  id="redoBtn"
+                  class="bg-green text-black font-bold cursor-pointer px-3 py-2 rounded-md"
+                >
+                  Redo
+                </button>
+              </div>
             </div>
-            <div class="row my-3 text-align-center">
+          </div>
+
+          <aside
+            id="default-sidebar"
+            class="absolute top-0 right-0 z-40 w-max h-screen bg-black"
+            aria-label="Sidebar"
+          >
+            <div class="flex justify-center items-center mb-2 text-white">
+              <span id="position-count" class="text-green">0</span> &nbsp
+              positions evaluated in &nbsp
+              <span id="time" class="text-green">0</span>s.
+            </div>
+            <div class="flex mb-3 justify-center items-center text-white">
+              That's &nbsp
+              <span id="positions-per-s" class="text-green">0</span> &nbsp
+              positions / s.
+            </div>
+            <div class="flex my-3 text-center text-white">
               <div class="col-md-12">
                 <h2>Advantage</h2>
                 <p>
                   <span id="advantageColor">Neither side</span> has the
-                  advantage (+<span id="advantageNumber">0</span>).
+                  advantage (+<span id="advantageNumber" class="text-green"
+                    >0</span
+                  >).
                 </p>
                 <div class="progress">
                   <div
-                    class="progress-bar bg-primary progress-bar-striped progress-bar-animated"
+                    class="progress-bar bg-green progress-bar-striped progress-bar-animated"
                     role="progressbar"
                     aria-valuenow="0"
                     style="width: 50%"
@@ -116,145 +232,28 @@
                 </div>
               </div>
             </div>
-            <div class="row my-3 text-align-center">
+            <div class="flex my-3 text-center text-white">
               <div class="col-md-12">
                 <h2>Status</h2>
-                <p><span id="status">No check, checkmate, or draw.</span></p>
+                <p>
+                  <span id="status" class="text-green"
+                    >No check, checkmate, or draw.</span
+                  >
+                </p>
               </div>
             </div>
-            <div id="accordion">
-              <div class="card">
-                <div class="card-header" id="settingsHeading">
-                  <h2 class="text-align-center text-black font-bold text-xl">
-                    Settings
-                  </h2>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="row align-items-center justify-content-center">
-                  <div class="form-group">
-                    <label for="search-depth">Search Depth (Black):</label>
-                    <select id="search-depth" class="text-black">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3" selected>3</option>
-                      <option value="4">4</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row align-items-center justify-content-center">
-                  <div class="form-group">
-                    <label for="search-depth-white"
-                      >Search Depth (White):</label
-                    >
-                    <select id="search-depth-white" class="text-black">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3" selected>3</option>
-                      <option value="4">4</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row align-items-center justify-content-center">
-                  <div class="form-group">
-                    <input
-                      type="checkbox"
-                      id="showHint"
-                      name="showHint"
-                      value="showHint"
-                    />
-                    <label for="showHint">Show Suggested Move (White)</label>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="openingPositionsHeading">
-                  <h2 class="text-align-center text-black font-bold text-xl">
-                    Opening Positions
-                  </h2>
-                </div>
-              </div>
-              <div
-                id="openingPositions"
-                aria-labelledby="openingPositionsHeading"
-                data-parent="#accordion"
-              >
-                <div class="card-body">
-                  <div class="row my-3 text-align-center">
-                    <div class="col-md-6 my-2">
-                      <button class="btn btn-primary" id="ruyLopezBtn">
-                        Ruy Lopez
-                      </button>
-                    </div>
-                    <div class="col-md-6 my-2">
-                      <button class="btn btn-primary" id="italianGameBtn">
-                        Italian Game
-                      </button>
-                    </div>
-                  </div>
-                  <div class="row my-3 text-align-center">
-                    <div class="col-md-6 my-2">
-                      <button class="btn btn-primary" id="sicilianDefenseBtn">
-                        Sicilian Defense
-                      </button>
-                    </div>
-                    <div class="col-md-6 my-2">
-                      <button class="btn btn-primary" id="startBtn">
-                        Start Position
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="compVsCompHeading">
-                  <h2 class="text-align-center text-black font-bold text-xl">
-                    Computer vs. Computer
-                  </h2>
-                </div>
+
+            <div class="dashboard text-white">
+              <div class="text-xl text-white font-bold">Dashboard</div>
+              <div id="lastMovesContainer">
+                <h2>Some Evaluated Moves:</h2>
+                <ul id="lastMovesList"></ul>
               </div>
             </div>
-            <div
-              id="compVsComp"
-              aria-labelledby="compVsCompHeading"
-              data-parent="#accordion"
-            >
-              <div class="card-body">
-                <div class="row text-align-center">
-                  <div class="col-md-6 my-2">
-                    <button class="btn btn-success" id="compVsCompBtn">
-                      Start Game
-                    </button>
-                  </div>
-                  <div class="col-md-6 my-2">
-                    <button class="btn btn-danger" id="resetBtn">
-                      Stop and Reset
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div id="myBoard"></div>
-            <div class="row my-3 text-align-center">
-              <div class="col-md-6 my-2">
-                <button class="btn btn-danger" id="undoBtn">Undo</button>
-              </div>
-              <div class="col-md-6 my-2">
-                <button class="btn btn-success" id="redoBtn">Redo</button>
-              </div>
-            </div>
-          </div>
+          </aside>
         </div>
-      </div>
-    </main>
-    <footer>
-      <p class="text-align-center">
-        Copyright &copy 2023
-        <a href="https://github.com/zeyu2001/chess-ai">Anupam Ganesh Srijan</a>
-      </p>
-    </footer>
+      </section>
+    </div>
 
     <script>
       const form = document.getElementById("logout-form");

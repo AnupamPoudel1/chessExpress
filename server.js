@@ -36,8 +36,9 @@ app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
-app.get('/game', verifyJWT, require('./routes/game'));
-app.get('/game2', verifyJWT, require('./routes/game'));
+app.get('/home', verifyJWT, require('./routes/game'));
+app.get('/magnus', verifyJWT, require('./routes/game'));
+app.get('/hikaru', verifyJWT, require('./routes/game'));
 
 app.all('*', (req, res) => {
     res.status(404);

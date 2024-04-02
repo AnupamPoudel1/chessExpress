@@ -7,77 +7,81 @@
     <link rel="stylesheet" href="/css/output.css" />
   </head>
   <body>
-    <div
-      class="bgimg w-full min-h-screen max-h-fit bg-black text-white flex justify-center items-center overflow-hidden"
-    >
-      <div
-        class="relative w-full max-w-screen-2xl min-h-screen flex flex-col justify-center items-center"
-      >
-        <div
-          id="main-error"
-          class="absolute top-5 right-5 h-max w-max bg-red rounded-md"
-        ></div>
-        <div
-          class="absolute top-[50%] right-[50%] translate-x-[50%] -translate-y-[50%] opacity-100 transition-all duration-500 border border-white bg-black rounded-md p-4"
-        >
-          <div class="flex flex-col justify-center items-center">
-            <div
-              class="logo flex justify-center items-center font-bold text-2xl mb-4"
-            >
-              CM
-            </div>
-            <h1 class="font-bold text-2xl">Log into ChessMate</h1>
-          </div>
-          <div class="flex max-md:flex-col justify-center items-center mt-8">
-            <form
-              id="login-form"
-              class="flex flex-col justify-center items-center"
-            >
-              <div class="flex flex-col justify-center items-start m-3">
-                <label for="username" class="text-base"> Username </label>
-                <input
-                  id="username"
-                  type="text"
-                  placeholder="username"
-                  class="w-60 bg-black border-b border-gray focus:outline-none active:outline-none focus:border-white transition-colors duration-500 py-3"
-                  required="true"
-                  name="username"
-                  autocomplete="true"
-                />
+    <div>
+      <section class='w-full h-full flex flex-col items-center overflow-x-hidden bg-creamwhite'>
+          <div class='relative w-full h-full flex justify-center items-center'>
+              <div class='w-full bg-black min-h-screen flex justify-center items-center p-3'>
+                  <div
+                      class="relative w-full max-w-screen-2xl min-h-screen flex flex-col justify-center items-center"
+                  >
+                      <div
+                          id="main-error"
+                          class="absolute top-5 right-5 h-max w-max bg-red rounded-md"
+                      ></div>
+                      <div
+                          class="absolute top-[50%] right-[50%] translate-x-[50%] -translate-y-[50%] opacity-100 transition-all duration-500 border border-white bg-darkBlack rounded-md p-4"
+                      >
+                          <div class="flex flex-col justify-center items-center">
+                              <a href="/" class="h-10 w-40 mb-5">
+                                  <img
+                                      src='/img/logo-no-background.png'
+                                      alt="logo"
+                                      class="h-full w-full bg-contain rounded-xl"
+                                  />
+                              </a>
+                              <h1 class="font-bold text-2xl text-white">Log In</h1>
+                          </div>
+                          <div class="flex max-md:flex-col justify-center items-center mt-2 bg-darkBlack">
+                              <form
+                                  id="login-form"
+                                  class="flex flex-col justify-center items-center bg-darkBlack"
+                              >
+                                  <div class="flex flex-col justify-center items-start m-3">
+                                      <label for="username" class="text-base text-white mb-2"> Username </label>
+                                      <input
+                                          id="username"
+                                          type="text"
+                                          placeholder="username"
+                                          class="w-60 bg-white rounded-md border-b border-gray focus:outline-none active:outline-none focus:border-white transition-colors duration-500 p-3"
+                                          required="true"
+                                          name="username"
+                                          autocomplete="true"
+                                      />
+                                  </div>
+                                  <div
+                                      class="flex flex-col justify-center items-start m-3 relative"
+                                  >
+                                      <label for="password" class="text-base text-white mb-2"> Password </label>
+                                      <input
+                                          id="password"
+                                          type="password"
+                                          placeholder="Password"
+                                          class="w-60 bg-white text-black rounded-md border-b border-gray focus:outline-none active:outline-none focus:border-white transition-colors duration-500 p-3"
+                                          required="true"
+                                          name="password"
+                                      />
+                                  </div>
+                                  <input
+                                      value="Login"
+                                      type="submit"
+                                      class="w-60 m-3 bg-green transition-all duration-500 p-3 cursor-pointer font-bold rounded-md hover:bg-black text-white"
+                                  />
+                              </form>
+                          </div>
+                          <div
+                              class="mt-5 text-base text-white flex flex-col justify-center items-center"
+                          >
+                              <div class="flex justify-center items-center">
+                                  New here?
+                                  <a href="/register" class="ml-2 border-b-2 border-green text-green ">Sign up</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
               </div>
-              <div
-                class="flex flex-col justify-center items-start m-3 relative"
-              >
-                <label for="password" class="text-base"> Password </label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  class="w-60 bg-black border-b border-gray focus:outline-none active:outline-none focus:border-white transition-colors duration-500 py-3"
-                  required="true"
-                  name="password"
-                />
-              </div>
-              <input
-                value="Login"
-                type="submit"
-                class="w-60 m-3 bg-white text-black transition-all duration-500 p-3 cursor-pointer"
-              />
-            </form>
           </div>
-          <div
-            class="mt-5 text-base text-white flex flex-col justify-center items-center"
-          >
-            <div class="flex justify-center items-center">
-              New here?
-              <a href="/register" class="ml-2 border-b-2 border-white"
-                >Sign up</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      </section>
+  </div>
 
     <script>
       const form = document.getElementById("login-form");
@@ -107,7 +111,7 @@
           } else {
             document.getElementById("username").value = "";
             document.getElementById("password").value = "";
-            location.assign("/game");
+            location.assign("/home");
           }
         } catch (err) {
           error.textContent = "No server response";
